@@ -1,4 +1,4 @@
-class Movie < ApplicationRecord
+class Movie 
   BASE_URL = 'https://api.themoviedb.org/3'
   API_KEY = Rails.env.production? ? ENV['TMDB_API_KEY'] : Rails.application.credentials.dig(:tmdb, :api_key)
 
