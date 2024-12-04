@@ -15,13 +15,7 @@ class Movie
       req.params['api_key'] = API_KEY
   end
 
-  if response.success?
     movie_data = JSON.parse(response.body, symbolize_names: true)[:results]
     movie_data.first(limit).map { |movie_attributes| new(movie_attributes) }
-  else
-    raise "Failed to fetch movies: #{response.status} - #{response.body}"
-  # movie_data = JSON.parse(response.body, symbolize_names: true)[:results]
-  # movie_data.first(limit).map { |movie_attributes| new(movie_attributes)}
-  end
 end
 end
