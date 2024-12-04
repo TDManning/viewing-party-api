@@ -22,17 +22,21 @@ RSpec.describe Movie, type: :model do
         vote_average: 9.3
       )
     end
-  end
 
-  describe ".top_rated" do
     it "returns up to 20 top-rated movies" do
-      stub_request(:get, "https://api.themoviedb.org/3/movie/top_rated?api_key=065266c07dd539b7a9d040e97052561c")
+
+      test_api_key = 'test_api_key'
+
+      stub_request(:get, "https://api.themoviedb.org/3/movie/top_rated?api_key=#{test_api_key}")
         .to_return(
           status: 200,
           body: {
             results: Array.new(30) { |i| { id: i, title: "Movie #{i}", vote_average: 8.5 } }
           }.to_json
         )
+      
+      allow(Movie).to receive(:api_key).and_return(test_api_key)
+
       movies = Movie.top_rated
       expect(movies.length).to eq(20)
     end
