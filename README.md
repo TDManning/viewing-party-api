@@ -15,3 +15,12 @@ Viewing Party is an application that allows users to explore movies and create a
 Spend some time familiarizing yourself with the functionality and structure of the application so far.
 
 Run the application and test out some endpoints: `rails s`
+
+## Endpoints
+
+1. Top Rated Movies: This endpoint retrieves up to 20 top rated movies from The Movie DB API. 
+
+Deployed:
+https://nameless-shore-40626-fbe4f336a2fe.herokuapp.com/api/v1/movies?filter=top_rated
+Postman:
+http://localhost:3000/api/v1/movies?filter=top_rated
