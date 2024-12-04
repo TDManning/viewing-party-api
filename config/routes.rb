@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  # get '/api/v1/movies/search', to: redirect('/api/v1/movies')
+  get '/api/v1/movies/search', to: redirect('/api/v1/movies')
 
   namespace :api do
     namespace :v1 do
