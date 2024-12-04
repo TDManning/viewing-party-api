@@ -24,3 +24,7 @@ Deployed:
 https://nameless-shore-40626-fbe4f336a2fe.herokuapp.com/api/v1/movies?filter=top_rated
 Postman:
 http://localhost:3000/api/v1/movies?filter=top_rated
+
+2. Movie Search: This endpoint should retrieve movies from The Movie DB API based on a search query from the request. 
+
+https://nameless-shore-40626-fbe4f336a2fe.herokuapp.com/api/v1/movies?query=Fight%20Club
