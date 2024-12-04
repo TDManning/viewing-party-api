@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Movie, type: :model do
+  let(:test_api_key) { 'test_api_key' }
+
+  before do
+    allow(Movie).to receive(:api_key).and_return(test_api_key)
+  end
+
   describe ".top_rated" do
     it "returns an array of movie objects with correct attributes" do
       response_body = {
@@ -10,7 +16,7 @@ RSpec.describe Movie, type: :model do
         ]
       }.to_json
 
-      stub_request(:get, %r{https://api.themoviedb.org/3/movie/top_rated})
+      stub_request(:get, "https://api.themoviedb.org/3/movie/top_rated?api_key=#{test_api_key}")
         .to_return(status: 200, body: response_body)
 
       movies = Movie.top_rated
@@ -24,9 +30,6 @@ RSpec.describe Movie, type: :model do
     end
 
     it "returns up to 20 top-rated movies" do
-
-      test_api_key = 'test_api_key'
-
       stub_request(:get, "https://api.themoviedb.org/3/movie/top_rated?api_key=#{test_api_key}")
         .to_return(
           status: 200,
@@ -34,11 +37,43 @@ RSpec.describe Movie, type: :model do
             results: Array.new(30) { |i| { id: i, title: "Movie #{i}", vote_average: 8.5 } }
           }.to_json
         )
-      
-      allow(Movie).to receive(:api_key).and_return(test_api_key)
 
       movies = Movie.top_rated
       expect(movies.length).to eq(20)
+    end
+  end
+
+  describe ".search" do
+    it "returns an array of movie objects that match the query" do
+      response_body = {
+        results: [
+          { id: 550, title: "Fight Club", vote_average: 8.8 },
+          { id: 554, title: "The Fight Club Documentary", vote_average: 7.5 }
+        ]
+      }.to_json
+
+      stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{test_api_key}&query=Fight%20Club")
+        .to_return(status: 200, body: response_body)
+
+      movies = Movie.search("Fight Club")
+
+      expect(movies.size).to eq(2)
+      expect(movies.first).to have_attributes(
+        id: 550,
+        title: "Fight Club",
+        vote_average: 8.8
+      )
+    end
+
+    it "returns an empty array if no results are found" do
+      response_body = { results: [] }.to_json
+
+      stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{test_api_key}&query=Nonexistent%20Movie")
+        .to_return(status: 200, body: response_body)
+
+      movies = Movie.search("Nonexistent Movie")
+
+      expect(movies).to be_empty
     end
   end
 end

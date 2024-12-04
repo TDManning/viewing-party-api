@@ -16,3 +16,8 @@ Rails.application.routes.draw do
     end
   end
 end
+
+
+# Query Parameters for /api/v1/movies
+# - ?filter=top_rated -> Fetches top-rated movies
+# - ?query=<search_term> -> Fetches movies based on search term
