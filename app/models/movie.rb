@@ -42,7 +42,7 @@ class Movie
     parse_response(movie_data, limit)
   end
 
-  def self.search(query, limit = 20)
+  def self.query_movies(query, limit = 20)
     movie_data = fetch('search/movie', { query: query })
     parse_response(movie_data, limit)
   end

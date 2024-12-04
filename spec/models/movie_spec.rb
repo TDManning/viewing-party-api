@@ -43,7 +43,7 @@ RSpec.describe Movie, type: :model do
     end
   end
 
-  describe ".search" do
+  describe ".query_movies" do
     it "returns an array of movie objects that match the query" do
       response_body = {
         results: [
@@ -55,7 +55,7 @@ RSpec.describe Movie, type: :model do
       stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{test_api_key}&query=Fight%20Club")
         .to_return(status: 200, body: response_body)
 
-      movies = Movie.search("Fight Club")
+      movies = Movie.query_movies("Fight Club")
 
       expect(movies.size).to eq(2)
       expect(movies.first).to have_attributes(
@@ -71,7 +71,7 @@ RSpec.describe Movie, type: :model do
       stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{test_api_key}&query=Nonexistent%20Movie")
         .to_return(status: 200, body: response_body)
 
-      movies = Movie.search("Nonexistent Movie")
+      movies = Movie.query_movies("Nonexistent Movie")
 
       expect(movies).to be_empty
     end
