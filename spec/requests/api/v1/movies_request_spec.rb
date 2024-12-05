@@ -1,86 +1,56 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe "Movies API", type: :request do
-  describe "GET /api/v1/movies" do
-    let(:test_api_key) { 'test_api_key' }
-
-    before do
-      allow(Movie).to receive(:api_key).and_return(test_api_key)
-    end
-
-    context "when fetching top-rated movies" do
-      before do
-        stub_request(:get, "https://api.themoviedb.org/3/movie/top_rated?api_key=#{test_api_key}")
-          .to_return(
-            status: 200,
-            body: {
-              results: [
-                { id: 1, title: "The Shawshank Redemption", vote_average: 9.3 },
-                { id: 2, title: "The Godfather", vote_average: 9.2 }
-              ]
-            }.to_json
-          )
-      end
-
-      it "returns a list of top-rated movies" do
+RSpec.describe "Movies Endpoint" do
+  describe "happy path" do
+    it "retrieves the top-rated movies" do
+      VCR.use_cassette("movies_top_rated") do
         get "/api/v1/movies?filter=top_rated"
+      end
 
-        expect(response).to have_http_status(:success)
+      expect(response).to be_successful
+      json = JSON.parse(response.body, symbolize_names: true)
 
-        data = JSON.parse(response.body, symbolize_names: true)[:data]
-        expect(data.size).to eq(2)
-
-        expect(data.first).to include(
-          id: "1",
-          type: "movie",
-          attributes: {
-            title: "The Shawshank Redemption",
-            vote_average: 9.3
-          }
-        )
+      expect(json[:data]).to be_an(Array)
+      expect(json[:data].size).to be <= 20 
+      json[:data].each do |movie|
+        expect(movie).to have_key(:id)
+        expect(movie[:type]).to eq("movie")
+        expect(movie[:attributes]).to have_key(:title)
+        expect(movie[:attributes]).to have_key(:vote_average)
       end
     end
 
-    context "when fetching movies by search query" do
-      before do
-        stub_request(:get, "https://api.themoviedb.org/3/search/movie?api_key=#{test_api_key}&query=Fight%20Club")
-          .to_return(
-            status: 200,
-            body: {
-              results: [
-                { id: 550, title: "Fight Club", vote_average: 8.8 },
-                { id: 551, title: "Fight Club: The Documentary", vote_average: 7.5 }
-              ]
-            }.to_json
-          )
+    it "retrieves movies by a search query" do
+      VCR.use_cassette("movies_search_inception") do
+        get "/api/v1/movies?query=Inception"
       end
 
-      it "returns a list of movies that match the query" do
-        get "/api/v1/movies", params: { query: "Fight Club" }
+      expect(response).to be_successful
+      json = JSON.parse(response.body, symbolize_names: true)
 
-        expect(response).to have_http_status(:success)
-
-        data = JSON.parse(response.body, symbolize_names: true)[:data]
-        expect(data.size).to eq(2)
-
-        expect(data.first).to include(
-          id: "550",
-          type: "movie",
-          attributes: {
-            title: "Fight Club",
-            vote_average: 8.8
-          }
-        )
-
-        expect(data.last).to include(
-          id: "551",
-          type: "movie",
-          attributes: {
-            title: "Fight Club: The Documentary",
-            vote_average: 7.5
-          }
-        )
+      expect(json[:data]).to be_an(Array)
+      expect(json[:data].size).to be <= 20 
+      json[:data].each do |movie|
+        expect(movie).to have_key(:id)
+        expect(movie[:type]).to eq("movie")
+        expect(movie[:attributes]).to have_key(:title)
+        expect(movie[:attributes][:title]).to include("Inception")
+        expect(movie[:attributes]).to have_key(:vote_average)
       end
     end
   end
-end
+
+    it "defaults to top-rated movies when no query or filter is provided" do
+      VCR.use_cassette("movies_top_rated_default_request") do
+        get "/api/v1/movies"
+      end
+
+      expect(response).to be_successful
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(json[:data]).to be_an(Array)
+      expect(json[:data].size).to be <= 20
+      expect(json[:data].first[:type]).to eq("movie")
+    end
+  end
+
