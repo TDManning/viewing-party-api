@@ -5,7 +5,7 @@ class Api::V1::MoviesController < ApplicationController
              elsif params[:filter] == 'top_rated'
                Movie.top_rated
              else
-               Movie.top_rated # Default to top-rated movies if no params are provided
+               Movie.top_rated 
              end
 
     render json: MovieSerializer.new(movies).serializable_hash

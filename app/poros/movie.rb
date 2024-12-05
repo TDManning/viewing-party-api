@@ -8,14 +8,16 @@ class Movie
   end
 
   def self.top_rated(limit = 20)
-    movie_data = MovieGateway.fetch('movie/top_rated')
+    movie_data = MovieGateway.top_rated_movies
     parse_response(movie_data, limit)
   end
 
   def self.query_movies(query, limit = 20)
-    movie_data = MovieGateway.fetch('search/movie', { query: query })
+    movie_data = MovieGateway.search_movies(query)
     parse_response(movie_data, limit)
   end
+
+  private
 
   def self.parse_response(movie_data, limit)
     movie_data.first(limit).map { |attributes| new(attributes) }

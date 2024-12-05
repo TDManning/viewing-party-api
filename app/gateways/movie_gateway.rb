@@ -5,12 +5,13 @@ class MovieGateway
     Faraday.new(url: BASE_URL)
   end
 
-  def self.fetch(endpoint, params = {})
-    response = conn.get(endpoint) do |req|
-      req.params['api_key'] = Rails.application.credentials.dig(:tmdb, :api_key)
-      params.each { |key, value| req.params[key] = value }
-    end
+  def self.top_rated_movies
+    response = conn.get('movie/top_rated', { api_key: Rails.application.credentials.dig(:tmdb, :api_key) })
+    JSON.parse(response.body, symbolize_names: true)[:results]
+  end
 
+  def self.search_movies(query)
+    response = conn.get('search/movie', { query: query, api_key: Rails.application.credentials.dig(:tmdb, :api_key) })
     JSON.parse(response.body, symbolize_names: true)[:results]
   end
 end
