@@ -21,10 +21,6 @@ class Movie
       end
     end
 
-    puts "Response Status: #{response.status}"
-    puts "Response Body: #{response.body}"
-    puts "Response Headers: #{response.headers}"
-
     JSON.parse(response.body, symbolize_names: true)[:results]
   end
 
