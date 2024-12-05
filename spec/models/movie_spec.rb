@@ -76,4 +76,23 @@ RSpec.describe Movie, type: :model do
       expect(movies).to be_empty
     end
   end
+
+  describe '.api_key' do
+    context 'when in the test environment' do
+      it 'returns the test API key' do
+        allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("test"))
+
+        expect(Movie.api_key).to eq("test_api_key")
+      end
+    end
+
+    context 'when in non-test environments' do
+      it 'returns the API key from Rails credentials' do
+        allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("development"))
+        allow(Rails.application.credentials).to receive(:dig).with(:tmdb, :api_key).and_return("development_api_key")
+
+        expect(Movie.api_key).to eq("development_api_key")
+      end
+    end
+  end
 end
