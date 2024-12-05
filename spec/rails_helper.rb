@@ -1,6 +1,7 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 require 'webmock/rspec'
+require 'vcr'
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
@@ -71,4 +72,11 @@ Shoulda::Matchers.configure do |config|
     with.test_framework :rspec
     with.library :rails
   end
+end
+
+VCR.configure do |config|
+  config.cassette_library_dir = 'spec/vcr_cassettes' # Directory for saved cassettes
+  config.hook_into :webmock # WebMock intercepts HTTP requests
+  config.configure_rspec_metadata! # Links cassettes to test metadata
+  config.filter_sensitive_data('<TMDB_API_KEY>') { Rails.application.credentials.dig(:tmdb, :api_key) } # Hide API key
 end
