@@ -15,7 +15,6 @@ module Api
         rescue ActiveRecord::RecordNotFound => e
           render json: ErrorSerializer.format_error(ErrorMessage.new(e.message, 404)), status: :not_found
         rescue ActiveRecord::RecordInvalid => e
-          render json: ErrorSerializer.format_error(ErrorMessage.new(e.message, 400)), status: :bad_request
         end
 
         private
