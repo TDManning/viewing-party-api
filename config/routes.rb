@@ -14,15 +14,20 @@ Rails.application.routes.draw do
       resources :users, only: [:create, :index]
       resources :sessions, only: :create
       resources :movies, only: :index
-      resources :viewing_parties, only: [:index, :create]
+      resources :viewing_parties, only: [:index, :create] do 
+        resources :invitees, only: [:create], module: :viewing_parties
+      end
     end
   end
 end
 
-
+#Endpoints 1 & 2
 # Query Parameters for /api/v1/movies
 # - ?filter=top_rated -> Fetches top-rated movies
 # - ?query=<search_term> -> Fetches movies based on search term
 
 #Endpoint 3
 #/api/v1/viewing_parties
+
+#Endpoint 4
+#POST /api/v1/viewing_parties/:viewing_party_id/invitees

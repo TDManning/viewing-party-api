@@ -24,6 +24,15 @@ class ViewingParty < ApplicationRecord
     end
   end
 
+  def add_invitee!(user_id)
+    invitee = User.find_by(id: user_id)
+    if invitee
+      UserViewingParty.create!(user: invitee, viewing_party: self)
+    else
+      raise ActiveRecord::RecordNotFound, "Invitee not found"
+    end
+  end
+
   private
 
   def end_time_after_start_time
