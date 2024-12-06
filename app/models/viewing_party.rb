@@ -26,11 +26,9 @@ class ViewingParty < ApplicationRecord
 
   def add_invitee!(user_id)
     invitee = User.find_by(id: user_id)
-    if invitee
-      UserViewingParty.create!(user: invitee, viewing_party: self)
-    else
-      raise ActiveRecord::RecordNotFound, "Invitee not found"
-    end
+    raise ActiveRecord::RecordNotFound, "Invitee not found" unless invitee
+  
+    UserViewingParty.create!(user: invitee, viewing_party: self)
   end
 
   private

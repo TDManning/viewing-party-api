@@ -12,7 +12,9 @@ module Api
           viewing_party.add_invitee!(invitee_params[:invitees_user_id])
 
           render json: ViewingPartySerializer.new(viewing_party), status: :ok
-        rescue ActiveRecord::RecordNotFound, ActiveRecord::RecordInvalid => e
+        rescue ActiveRecord::RecordNotFound => e
+          render json: ErrorSerializer.format_error(ErrorMessage.new(e.message, 404)), status: :not_found
+        rescue ActiveRecord::RecordInvalid => e
           render json: ErrorSerializer.format_error(ErrorMessage.new(e.message, 400)), status: :bad_request
         end
 
