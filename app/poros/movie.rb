@@ -14,17 +14,10 @@ class Movie
     parse_response(movie_data, limit)
   end
 
-  # def self.query_movies(query, limit = 20)
-  #   movie_data = MovieGateway.search_movies(query)
-  #   parse_response(movie_data, limit)
-  # end
-
   def self.query_movies(query, limit = 20)
     movie_data = MovieGateway.search_movies(query)
-    Rails.logger.info("Movie data from API: #{movie_data.inspect}")
     parse_response(movie_data, limit)
   end
-  
 
   private
 

@@ -1,6 +1,16 @@
 class ViewingPartySerializer
   include JSONAPI::Serializer
-  attributes :name, :start_time, :end_time, :movie_id, :movie_title, :host_id
+  attributes :name, :start_time, :end_time, :movie_id, :movie_title
+
+  attribute :invitees do |viewing_party|
+    viewing_party.invitees.map do |invitee|
+      {
+        id: invitee.id,
+        name: invitee.name,
+        username: invitee.username
+      }
+    end
+  end
 
   def self.format_viewing_party_list(viewing_parties)
     { data:
@@ -14,7 +24,13 @@ class ViewingPartySerializer
               end_time: viewing_party.end_time,
               movie_id: viewing_party.movie_id,
               movie_title: viewing_party.movie_title,
-              host_id: viewing_party.host_id
+              invitees: viewing_party.invitees.map do |invitee|
+                {
+                  id: invitee.id,
+                  name: invitee.name,
+                  username: invitee.username
+                }
+              end
             }
           }
         end
