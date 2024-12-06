@@ -9,6 +9,8 @@ class Movie
 
   def self.top_rated(limit = 20)
     movie_data = MovieGateway.top_rated_movies
+    Rails.logger.info("Received movie data: #{movie_data.inspect}")
+
     parse_response(movie_data, limit)
   end
 
@@ -19,7 +21,13 @@ class Movie
 
   private
 
+  # def self.parse_response(movie_data, limit)
+  #   movie_data.first(limit).map { |attributes| new(attributes) }
+  # end
+
   def self.parse_response(movie_data, limit)
+    return [] unless movie_data.is_a?(Array) && movie_data.any?
+
     movie_data.first(limit).map { |attributes| new(attributes) }
   end
 end
