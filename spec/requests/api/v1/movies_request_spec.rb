@@ -52,5 +52,30 @@ RSpec.describe "Movies Endpoint" do
       expect(json[:data].size).to be <= 20
       expect(json[:data].first[:type]).to eq("movie")
     end
+
+    describe 'GET /api/v1/movies/:id' do
+      it 'returns movie details for a valid ID', :vcr do
+        get '/api/v1/movies/278'
+  
+        expect(response).to have_http_status(:ok)
+        json = JSON.parse(response.body, symbolize_names: true)
+  
+        expect(json[:data][:attributes][:title]).to eq('The Shawshank Redemption')
+      end
+
+    describe 'GET /api/v1/movies/:id' do
+      it 'returns serialized movie details for a valid ID', :vcr do
+        VCR.use_cassette('movies/valid_movie_details') do
+          get '/api/v1/movies/278'
+  
+          expect(response).to have_http_status(:ok)
+          json = JSON.parse(response.body, symbolize_names: true)
+  
+          expect(json[:data][:id]).to eq(278)
+          expect(json[:data][:attributes][:title]).to eq("The Shawshank Redemption")
+        end
+      end
+    end
   end
+end
 
