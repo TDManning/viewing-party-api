@@ -33,4 +33,22 @@ RSpec.describe MovieGateway do
       end
     end
   end
+
+  describe '.fetch_movie_details' do
+    it 'returns movie details when a valid ID is provided', :vcr do
+      movie_id = 550
+      details = MovieGateway.fetch_movie_details(movie_id)
+
+      expect(details).to be_a(Hash)
+      expect(details[:id]).to eq(550)
+      expect(details[:title]).to eq('Fight Club')
+    end
+
+    it 'returns nil for an invalid ID', :vcr do
+      invalid_id = 999999
+      details = MovieGateway.fetch_movie_details(invalid_id)
+
+      expect(details).to be_nil
+    end
+  end
 end

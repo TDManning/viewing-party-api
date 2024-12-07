@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/movie/999999?api_key=<TMDB_API_KEY>&append_to_response=credits,reviews
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.10.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Sat, 07 Dec 2024 21:05:26 GMT
+      Server:
+      - openresty
+      Cache-Control:
+      - public, max-age=15508
+      Etag:
+      - W/"8ed2d67b35cd996c6a97dae4a0e6a810"
+      Vary:
+      - Accept-Encoding,accept-encoding
+      - Origin
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 d0db17ab565101172c4057aabc1a1086.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - SFO53-P4
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      X-Amz-Cf-Id:
+      - "-MdGJMDW4sUWVN752yU2KihFdsXhuUzEaqRxDe6e7IInHC1iyF-6Sw=="
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJhZHVsdCI6ZmFsc2UsImJhY2tkcm9wX3BhdGgiOm51bGwsImJlbG9uZ3NfdG9fY29sbGVjdGlvbiI6bnVsbCwiYnVkZ2V0IjowLCJnZW5yZXMiOlt7ImlkIjozNSwibmFtZSI6IkNvbWVkeSJ9XSwiaG9tZXBhZ2UiOiIiLCJpZCI6OTk5OTk5LCJpbWRiX2lkIjoidHQxMjI5ODk1NiIsIm9yaWdpbl9jb3VudHJ5IjpbIlVTIl0sIm9yaWdpbmFsX2xhbmd1YWdlIjoiZW4iLCJvcmlnaW5hbF90aXRsZSI6IlRoZSBFbC1TYWxvbW9uczogTWFycmlhZ2Ugb2YgQ29udmVuaWVuY2UiLCJvdmVydmlldyI6IlF1aWNrLXdpdHRlZCBjb21lZHkgZHVvLCBKZXNzIFNhbG9tb24gYW5kIEVtYW4gRWwtSHVzc2VpbmksIGhpbGFyaW91c2x5IHRha2Utb24gdG9kYXnigJlzIHBvbGl0aWNzIGZyb20gdGhlaXIgcGVyc3BlY3RpdmVzIGFzIGEgSmV3aXNoIGFuZCBQYWxlc3RpbmlhbiBzYW1lLXNleCBtYXJyaWVkIGNvdXBsZS4gRnJvbSBwZWFjZSBpbiB0aGUgTWlkZGxlIEVhc3QsIERvbmFsZCBUcnVtcCwgbWFycmlhZ2UsIGFuZCBFbWFu4oCZcyByZWNrbGVzcyBkcml2aW5nLCB0aGlzIG9uZS1ob3VyIGNvbWVkeSBzcGVjaWFsIGZyb20gSnVzdCBGb3IgTGF1Z2hzIGlzIHN1cmUgdG8gbGVhdmUgeW91IGluIHN0aXRjaGVzLiIsInBvcHVsYXJpdHkiOjAuMjk4LCJwb3N0ZXJfcGF0aCI6Ii9vaGpBTHB2cW1jS3FOcjZKMzBzVGFqQllFR0cuanBnIiwicHJvZHVjdGlvbl9jb21wYW5pZXMiOlt7ImlkIjoxMDg1NzQsImxvZ29fcGF0aCI6bnVsbCwibmFtZSI6Ikp1c3QgRm9yIExhdWdocyBUZWxldmlzaW9uIiwib3JpZ2luX2NvdW50cnkiOiIifV0sInByb2R1Y3Rpb25fY291bnRyaWVzIjpbeyJpc29fMzE2Nl8xIjoiQ0EiLCJuYW1lIjoiQ2FuYWRhIn1dLCJyZWxlYXNlX2RhdGUiOiIyMDIwLTAzLTE0IiwicmV2ZW51ZSI6MCwicnVudGltZSI6NTMsInNwb2tlbl9sYW5ndWFnZXMiOlt7ImVuZ2xpc2hfbmFtZSI6IkVuZ2xpc2giLCJpc29fNjM5XzEiOiJlbiIsIm5hbWUiOiJFbmdsaXNoIn1dLCJzdGF0dXMiOiJSZWxlYXNlZCIsInRhZ2xpbmUiOiIiLCJ0aXRsZSI6IlRoZSBFbC1TYWxvbW9uczogTWFycmlhZ2Ugb2YgQ29udmVuaWVuY2UiLCJ2aWRlbyI6ZmFsc2UsInZvdGVfYXZlcmFnZSI6MC4wLCJ2b3RlX2NvdW50IjowLCJjcmVkaXRzIjp7ImNhc3QiOlt7ImFkdWx0IjpmYWxzZSwiZ2VuZGVyIjowLCJpZCI6MzEwMjY2MSwia25vd25fZm9yX2RlcGFydG1lbnQiOiJBY3RpbmciLCJuYW1lIjoiSmVzcyBTYWxvbW9uIiwib3JpZ2luYWxfbmFtZSI6Ikplc3MgU2Fsb21vbiIsInBvcHVsYXJpdHkiOjAuMDAxLCJwcm9maWxlX3BhdGgiOm51bGwsImNhc3RfaWQiOjEsImNoYXJhY3RlciI6IlNlbGYiLCJjcmVkaXRfaWQiOiI2MmQxMjNjOTFiZjg3NjAwNTQ5Y2VlNDQiLCJvcmRlciI6MH0seyJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MCwiaWQiOjI0ODc2NjIsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6IkVtYW4gRWwtSHVzc2VpbmkiLCJvcmlnaW5hbF9uYW1lIjoiRW1hbiBFbC1IdXNzZWluaSIsInBvcHVsYXJpdHkiOjAuMDAxLCJwcm9maWxlX3BhdGgiOm51bGwsImNhc3RfaWQiOjIsImNoYXJhY3RlciI6IlNlbGYiLCJjcmVkaXRfaWQiOiI2MmQxMjNkY2EzZTRiYTAwNjcwMzEzMGYiLCJvcmRlciI6MX1dLCJjcmV3IjpbeyJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MiwiaWQiOjEyNjIzNTAsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiRGlyZWN0aW5nIiwibmFtZSI6Ik1hdGhpZXUgQmFlciIsIm9yaWdpbmFsX25hbWUiOiJNYXRoaWV1IEJhZXIiLCJwb3B1bGFyaXR5IjowLjAwMSwicHJvZmlsZV9wYXRoIjpudWxsLCJjcmVkaXRfaWQiOiI2MmQxMjNmOGFmNDMyNDAwNTE1MGJhM2MiLCJkZXBhcnRtZW50IjoiRGlyZWN0aW5nIiwiam9iIjoiRGlyZWN0b3IifSx7ImFkdWx0IjpmYWxzZSwiZ2VuZGVyIjowLCJpZCI6MzQ3ODU2MSwia25vd25fZm9yX2RlcGFydG1lbnQiOiJQcm9kdWN0aW9uIiwibmFtZSI6IkFudG9uIExlbyIsIm9yaWdpbmFsX25hbWUiOiJBbnRvbiBMZW8iLCJwb3B1bGFyaXR5IjowLjAwMSwicHJvZmlsZV9wYXRoIjpudWxsLCJjcmVkaXRfaWQiOiI2MmQxMjQwYjFiZjg3NjAwNGZhNmJjN2UiLCJkZXBhcnRtZW50IjoiUHJvZHVjdGlvbiIsImpvYiI6IlByb2R1Y2VyIn0seyJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MCwiaWQiOjM1MDc2NjQsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiUHJvZHVjdGlvbiIsIm5hbWUiOiJCcnVjZSBIaWxscyIsIm9yaWdpbmFsX25hbWUiOiJCcnVjZSBIaWxscyIsInBvcHVsYXJpdHkiOjAuMDAxLCJwcm9maWxlX3BhdGgiOm51bGwsImNyZWRpdF9pZCI6IjYyZDEyNDI3YjNlNjI3MDA1MGRjOWY1ZSIsImRlcGFydG1lbnQiOiJQcm9kdWN0aW9uIiwiam9iIjoiRXhlY3V0aXZlIFByb2R1Y2VyIn1dfSwicmV2aWV3cyI6eyJwYWdlIjoxLCJyZXN1bHRzIjpbXSwidG90YWxfcGFnZXMiOjAsInRvdGFsX3Jlc3VsdHMiOjB9fQ==
+  recorded_at: Sat, 07 Dec 2024 21:05:26 GMT
+recorded_with: VCR 6.3.1
