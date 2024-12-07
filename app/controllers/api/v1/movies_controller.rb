@@ -13,6 +13,7 @@ class Api::V1::MoviesController < ApplicationController
 
   def show
     movie = MovieDetailsFacade.fetch_movie_details(params[:id])
+    
     if movie
       render json: MovieDetailsSerializer.new(movie).serializable_hash
     else

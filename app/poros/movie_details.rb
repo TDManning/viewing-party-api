@@ -17,11 +17,13 @@ class MovieDetails
   private
 
   def format_runtime(minutes)
-    return nil unless minutes
+    return minutes if minutes.is_a?(String) # If already formatted, return as is
+    
     hours = minutes / 60
-    mins = minutes % 60
-    "#{hours} hours, #{mins} minutes"
+    remaining_minutes = minutes % 60
+    "#{hours} hours, #{remaining_minutes} minutes"
   end
+  
 
   def format_cast(cast)
     return [] unless cast.is_a?(Array)

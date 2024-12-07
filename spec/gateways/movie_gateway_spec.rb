@@ -34,21 +34,71 @@ RSpec.describe MovieGateway do
     end
   end
 
-  describe '.fetch_movie_details' do
-    it 'returns movie details when a valid ID is provided', :vcr do
-      movie_id = 550
-      details = MovieGateway.fetch_movie_details(movie_id)
+  describe ".fetch_movie_details" do
+    it "returns movie details when a valid ID is provided" do
+      VCR.use_cassette("movies_details_valid_id_gateway") do
+        movie_id = 550
+        details = MovieGateway.fetch_movie_details(movie_id)
 
-      expect(details).to be_a(Hash)
-      expect(details[:id]).to eq(550)
-      expect(details[:title]).to eq('Fight Club')
+        expect(details).to be_a(Hash)
+        expect(details[:id]).to eq(550)
+        expect(details[:title]).to eq("Fight Club")
+      end
     end
 
-    it 'returns nil for an invalid ID', :vcr do
-      invalid_id = 999999
-      details = MovieGateway.fetch_movie_details(invalid_id)
+    it "returns nil when the movie ID is invalid" do
+      VCR.use_cassette("movies_details_invalid_id_gateway") do
+        movie_id = 9999991234
+        details = MovieGateway.fetch_movie_details(movie_id)
+        expect(details).to be_nil
+      end
+    end
 
-      expect(details).to be_nil
+    it 'logs an error and returns nil when the API returns a 500 error' do
+      VCR.use_cassette("movies_details_500_error_gateway") do
+        allow(Rails.logger).to receive(:error)
+        
+        response = instance_double(Faraday::Response, success?: false, status: 500, body: "Internal Server Error")
+        allow(MovieGateway).to receive(:conn).and_return(instance_double(Faraday::Connection, get: response))
+        
+        details = MovieGateway.fetch_movie_details(0)
+        
+        expect(Rails.logger).to have_received(:error).with("Error fetching data from TMDb API: 500 - Internal Server Error")
+        expect(details).to be_nil
+      end
+    end
+
+  describe ".conn" do
+    it "initializes a Faraday connection with the correct base URL" do
+      connection = MovieGateway.conn
+      expect(connection.url_prefix.to_s).to eq("https://api.themoviedb.org/3/")
     end
   end
+
+  describe ".api_key" do
+    it "retrieves the API key from credentials" do
+      api_key = MovieGateway.send(:api_key)
+      expect(api_key).to eq(Rails.application.credentials.dig(:tmdb, :api_key))
+    end
+  end
+
+  describe ".parse_response" do
+    it "logs an error and returns nil for an unsuccessful response" do
+      allow(Rails.logger).to receive(:error)
+  
+      response = instance_double(Faraday::Response, success?: false, status: 404, body: "Not Found")
+      parsed = MovieGateway.send(:parse_response, response)
+  
+      expect(parsed).to be_nil
+      expect(Rails.logger).to have_received(:error).with("Error fetching data from TMDb API: 404 - Not Found")
+    end
+  
+    it "parses and returns JSON for a successful response" do
+      response = instance_double(Faraday::Response, success?: true, body: '{"id": 123}')
+      parsed = MovieGateway.send(:parse_response, response)
+  
+      expect(parsed).to eq({ id: 123 })
+    end
+  end
+end
 end

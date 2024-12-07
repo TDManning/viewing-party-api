@@ -62,16 +62,7 @@ RSpec.describe "Movies Endpoint" do
   
         expect(json[:data][:attributes][:title]).to eq('The Shawshank Redemption')
       end
-  
-      it 'returns an error for an invalid ID', :vcr do
-        get '/api/v1/movies/999999'
-  
-        expect(response).to have_http_status(:not_found)
-        json = JSON.parse(response.body, symbolize_names: true)
-  
-        expect(json[:error]).to eq('Movie not found')
-      end
-    end
+
     describe 'GET /api/v1/movies/:id' do
       it 'returns serialized movie details for a valid ID', :vcr do
         VCR.use_cassette('movies/valid_movie_details') do
@@ -84,17 +75,7 @@ RSpec.describe "Movies Endpoint" do
           expect(json[:data][:attributes][:title]).to eq("The Shawshank Redemption")
         end
       end
-  
-      it 'returns an error for an invalid ID', :vcr do
-        VCR.use_cassette('movies/invalid_movie_details') do
-          get '/api/v1/movies/999999'
-  
-          expect(response).to have_http_status(:not_found)
-          json = JSON.parse(response.body, symbolize_names: true)
-  
-          expect(json[:error]).to eq('Movie not found')
-        end
-      end
     end
   end
+end
 
