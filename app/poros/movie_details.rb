@@ -17,7 +17,7 @@ class MovieDetails
   private
 
   def format_runtime(minutes)
-    return minutes if minutes.is_a?(String) # If already formatted, return as is
+    return minutes if minutes.is_a?(String) 
     
     hours = minutes / 60
     remaining_minutes = minutes % 60

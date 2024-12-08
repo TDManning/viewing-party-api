@@ -77,5 +77,16 @@ RSpec.describe "Movies Endpoint" do
       end
     end
   end
+
+    context 'when the movie ID is invalid' do
+      it 'returns a 404 error with a proper message' do
+        allow(MovieDetailsFacade).to receive(:fetch_movie_details).with('invalid_id').and_return(nil)
+
+        get '/api/v1/movies/invalid_id'
+
+        expect(response).to have_http_status(:not_found)
+        expect(JSON.parse(response.body)).to eq('error' => 'Movie not found')
+      end
+    end
 end
 
