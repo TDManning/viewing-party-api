@@ -15,11 +15,11 @@ class Api::V1::UsersController < ApplicationController
 
   def show
     user = User.find_by(id: params[:id])
-
-    if user
-      render json: UserProfileSerializer.new(user).serializable_hash
-    else
+  
+    if user.nil?
       render json: { message: 'Invalid User ID', status: 404 }, status: :not_found
+    else
+      render json: UserProfileSerializer.new(user).serializable_hash
     end
   end
 

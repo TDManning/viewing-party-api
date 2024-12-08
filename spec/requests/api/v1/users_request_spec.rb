@@ -87,4 +87,18 @@ RSpec.describe "Users API", type: :request do
       expect(json[:data][0][:attributes]).to_not have_key(:api_key)
     end
   end
+
+  describe 'GET /api/v1/users/:id' do
+    let(:user) { create(:user, name: 'Leo DiCaprio', username: 'leo_real_verified') }
+
+    context 'when the user ID is invalid' do
+      it 'returns a 404 error with an appropriate message' do
+        get '/api/v1/users/invalid_id'
+
+        expect(response).to have_http_status(:not_found)
+        json = JSON.parse(response.body, symbolize_names: true)
+        expect(json[:message]).to eq('Invalid User ID')
+      end
+    end
+  end
 end

@@ -1,27 +1,10 @@
 class UserProfileSerializer
-  def initialize(user)
-    @user = user
-  end
+  include JSONAPI::Serializer
 
-  def serializable_hash
-    {
-      data: {
-        id: @user.id.to_s,
-        type: 'user',
-        attributes: {
-          name: @user.name,
-          username: @user.username,
-          viewing_parties_hosted: hosted_parties,
-          viewing_parties_invited: invited_parties
-        }
-      }
-    }
-  end
+  attributes :name, :username
 
-  private
-
-  def hosted_parties
-    @user.hosted_parties.map do |party|
+  attribute :viewing_parties_hosted do |user|
+    user.viewing_parties_hosted.map do |party|
       {
         id: party.id,
         name: party.name,
@@ -34,8 +17,10 @@ class UserProfileSerializer
     end
   end
 
-  def invited_parties
-    @user.invited_parties.map do |party|
+  attribute :viewing_parties_invited do |user|
+    user.viewing_parties_attended.map do |party|
+      next if party.host_id == user.id 
+
       {
         name: party.name,
         start_time: party.start_time,
@@ -44,6 +29,6 @@ class UserProfileSerializer
         movie_title: party.movie_title,
         host_id: party.host_id
       }
-    end
+    end.compact
   end
 end
