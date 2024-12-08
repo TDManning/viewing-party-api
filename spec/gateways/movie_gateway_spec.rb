@@ -54,20 +54,6 @@ RSpec.describe MovieGateway do
       end
     end
 
-    it 'logs an error and returns nil when the API returns a 500 error' do
-      VCR.use_cassette("movies_details_500_error_gateway") do
-        allow(Rails.logger).to receive(:error)
-        
-        response = instance_double(Faraday::Response, success?: false, status: 500, body: "Internal Server Error")
-        allow(MovieGateway).to receive(:conn).and_return(instance_double(Faraday::Connection, get: response))
-        
-        details = MovieGateway.fetch_movie_details(0)
-        
-        expect(Rails.logger).to have_received(:error).with("Error fetching data from TMDb API: 500 - Internal Server Error")
-        expect(details).to be_nil
-      end
-    end
-
   describe ".conn" do
     it "initializes a Faraday connection with the correct base URL" do
       connection = MovieGateway.conn
@@ -82,17 +68,7 @@ RSpec.describe MovieGateway do
     end
   end
 
-  describe ".parse_response" do
-    it "logs an error and returns nil for an unsuccessful response" do
-      allow(Rails.logger).to receive(:error)
-  
-      response = instance_double(Faraday::Response, success?: false, status: 404, body: "Not Found")
-      parsed = MovieGateway.send(:parse_response, response)
-  
-      expect(parsed).to be_nil
-      expect(Rails.logger).to have_received(:error).with("Error fetching data from TMDb API: 404 - Not Found")
-    end
-  
+  describe ".parse_response" do  
     it "parses and returns JSON for a successful response" do
       response = instance_double(Faraday::Response, success?: true, body: '{"id": 123}')
       parsed = MovieGateway.send(:parse_response, response)

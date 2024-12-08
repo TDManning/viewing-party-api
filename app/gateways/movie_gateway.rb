@@ -32,9 +32,6 @@ class MovieGateway
   def self.parse_response(response)
     if response.success?
       JSON.parse(response.body, symbolize_names: true)
-    else
-      Rails.logger.error("Error fetching data from TMDb API: #{response.status} - #{response.body}")
-      nil
     end
   end
 end
