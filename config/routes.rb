@@ -27,7 +27,13 @@ end
 # - ?query=<search_term> -> Fetches movies based on search term
 
 #Endpoint 3
-#/api/v1/viewing_parties
+# POST /api/v1/viewing_parties -> Create a viewing party
 
 #Endpoint 4
-#POST /api/v1/viewing_parties/:viewing_party_id/invitees
+# POST /api/v1/viewing_parties/:viewing_party_id/invitees -> Add user to a viewing party
+
+#Endpoint 5
+# GET api/v1/movies/:id -> Fetch specific movie details
+
+#Endpoint 6
+# GET /api/v1/users/:id -> Retrieve user profile

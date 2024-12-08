@@ -18,13 +18,27 @@ Run the application and test out some endpoints: `rails s`
 
 ## Endpoints
 
-1. Top Rated Movies: This endpoint retrieves up to 20 top rated movies from The Movie DB API. 
+Full endpoints for example: 
 
 Deployed:
 https://nameless-shore-40626-fbe4f336a2fe.herokuapp.com/api/v1/movies?filter=top_rated
-Postman:
+Local:
 http://localhost:3000/api/v1/movies?filter=top_rated
 
-2. Movie Search: This endpoint should retrieve movies from The Movie DB API based on a search query from the request. 
 
-https://nameless-shore-40626-fbe4f336a2fe.herokuapp.com/api/v1/movies?query=Fight%20Club
+#Endpoints 1 & 2
+# Query Parameters for /api/v1/movies
+# - ?filter=top_rated -> Fetches top-rated movies
+# - ?query=<search_term> -> Fetches movies based on search term
+
+#Endpoint 3
+# POST /api/v1/viewing_parties -> Create a viewing party
+
+#Endpoint 4
+# POST /api/v1/viewing_parties/:viewing_party_id/invitees -> Add user to a viewing party
+
+#Endpoint 5
+# GET api/v1/movies/:id -> Fetch specific movie details
+
+#Endpoint 6
+# GET /api/v1/users/:id -> Retrieve user profile
