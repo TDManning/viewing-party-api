@@ -12,8 +12,6 @@ Viewing Party is an application that allows users to explore movies and create a
 2. Install gem packages: `bundle install`
 3. Setup the database: `rails db:{drop,create,migrate,seed}`
 
-Spend some time familiarizing yourself with the functionality and structure of the application so far.
-
 Run the application and test out some endpoints: `rails s`
 
 ## Endpoints
@@ -25,20 +23,32 @@ https://nameless-shore-40626-fbe4f336a2fe.herokuapp.com/api/v1/movies?filter=top
 Local:
 http://localhost:3000/api/v1/movies?filter=top_rated
 
+# Endpoint 1
+# GET- /api/v1/movies?filter=top_rated -> Fetches top-rated movies
 
-#Endpoints 1 & 2
-# Query Parameters for /api/v1/movies
-# - ?filter=top_rated -> Fetches top-rated movies
-# - ?query=<search_term> -> Fetches movies based on search term
+# Endpoint 2
+# GET - /api/v1/movies?query=<search_term> -> Fetches movies based on specified search term
 
-#Endpoint 3
+# Endpoint 3
 # POST /api/v1/viewing_parties -> Create a viewing party
+Content-Type: application/json
 
-#Endpoint 4
-# POST /api/v1/viewing_parties/:viewing_party_id/invitees -> Add user to a viewing party
+{
+  "name": "Movie Night",
+  "date": "2024-12-31",
+  "time": "20:00",
+  "movie_id": 123
+}
 
-#Endpoint 5
-# GET api/v1/movies/:id -> Fetch specific movie details
+# Endpoint 4
+# POST /api/v1/viewing_parties/:viewing_party_id/invitees -> Add user to a viewing party by viewing party id
+Content-Type: application/json
+{
+  "user_id": 456
+}
 
-#Endpoint 6
-# GET /api/v1/users/:id -> Retrieve user profile
+# Endpoint 5
+# GET api/v1/movies/:id -> Fetch specific movie details by movie id
+
+# Endpoint 6
+# GET /api/v1/users/:id -> Retrieve user profile by user id
