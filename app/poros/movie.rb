@@ -21,10 +21,6 @@ class Movie
 
   private
 
-  # def self.parse_response(movie_data, limit)
-  #   movie_data.first(limit).map { |attributes| new(attributes) }
-  # end
-
   def self.parse_response(movie_data, limit)
     return [] unless movie_data.is_a?(Array) && movie_data.any?
 
