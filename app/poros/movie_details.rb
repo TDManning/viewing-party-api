@@ -9,9 +9,9 @@ class MovieDetails
     @runtime = format_runtime(data[:runtime])
     @genres = data[:genres].map { |genre| genre[:name] }
     @summary = data[:overview]
-    @cast = data[:credits][:cast] # Store raw cast data
+    @cast = data[:credits][:cast]
     @total_reviews = data[:reviews][:total_results]
-    @reviews = data[:reviews][:results] # Store raw reviews data
+    @reviews = data[:reviews][:results] 
   end
 
   private
