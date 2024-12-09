@@ -26,19 +26,23 @@ class MovieDetailsSerializer
   private
 
   def format_cast(cast)
-    cast.map do |member|
+    return [] unless cast.is_a?(Array)
+
+    cast.first(10).map do |member|
       {
         character: member[:character],
-        actor: member[:actor]
+        actor: member[:name]
       }
     end
   end
 
   def format_reviews(reviews)
-    reviews.map do |review|
+    return [] unless reviews.is_a?(Array)
+
+    reviews.first(5).map do |review|
       {
         author: review[:author],
-        review: review[:review]
+        review: review[:content]
       }
     end
   end

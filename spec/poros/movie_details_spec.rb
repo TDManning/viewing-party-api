@@ -36,8 +36,8 @@ RSpec.describe MovieDetails, type: :poro do
     expect(movie.runtime).to eq('2 hours, 19 minutes')
     expect(movie.genres).to eq(['Drama'])
     expect(movie.summary).to eq('An insomniac office worker...')
-    expect(movie.cast).to include({ character: 'Narrator', actor: 'Edward Norton' })
+    expect(movie.cast).to include({:character=>"Tyler Durden", :name=>"Brad Pitt"})
     expect(movie.total_reviews).to eq(12)
-    expect(movie.reviews.first).to eq({ author: 'Reviewer 1', review: 'Amazing movie!' })
+    expect(movie.reviews.first).to eq({ :author=>"Reviewer 1", :content=>"Amazing movie!" })
   end
 end
